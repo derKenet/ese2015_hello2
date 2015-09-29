@@ -6,6 +6,8 @@ import org.sample.controller.exceptions.InvalidUserException;
 import org.sample.controller.pojos.SignupForm;
 import org.sample.controller.pojos.TeamForm;
 import org.sample.controller.service.SampleService;
+import org.sample.controller.service.TeamService;
+import org.sample.model.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,13 +22,21 @@ public class IndexController {
 
     @Autowired
     SampleService sampleService;
-
-
+    
+    @Autowired
+    TeamService teamService;
+    
+    public static final String PAGE_INDEX = "index";
+    public static final String PAGE_SHOW = "show";
+    
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index() {
     	ModelAndView model = new ModelAndView("index");
     	model.addObject("signupForm", new SignupForm());    	
-        return model;
+    	Iterable<Team> teamList = teamService.getTeams();
+    	model.addObject("teamList", teamList);
+    	//model.addObject("teams",teamService.getTeams());
+    	return model;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
@@ -46,7 +56,10 @@ public class IndexController {
     	return model;
     }
 
+    /*Created a Team Controller Class for separation of concerns*/
     
+    
+/*
     @RequestMapping(value = "/team", method = RequestMethod.GET)
     public ModelAndView team() {
     	ModelAndView model = new ModelAndView("new-team");
@@ -69,14 +82,12 @@ public class IndexController {
         	model = new ModelAndView("new-team");
         }   	
     	return model;
-    }
-
+    }*/
     @RequestMapping(value = "/security-error", method = RequestMethod.GET)
     public String securityError(RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("page_error", "You do have have permission to do that!");
         return "redirect:/";
     }
-
 }
 
 

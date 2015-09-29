@@ -3,35 +3,33 @@ package org.sample.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Team {
 
     @Id
     @GeneratedValue
-    private Long teamId;
+    private Long id;
     
-    private String teamName;
+    private String name;
     private Date date;
     
     public String getTeam() {
-        return teamName;
+        return name;
     }
 
-    public void setTeam(String team) {
-        this.teamName = team;
+    public void setTeam(String teamName) {
+        this.name = teamName;
     }
     
     public Long getId() {
-        return teamId;
+        return id;
     }
 
     public void setId(Long id) {
-        this.teamId = id;
+        this.id = id;
     }
     public Date getDate() {
         return date;
